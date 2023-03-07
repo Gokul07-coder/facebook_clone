@@ -1,0 +1,7 @@
+signup page
+login page / authenticate user 
+getuser page
+loginpage / forgetPassword
+
+must use JWT and send it to header and display  -- pending
+
