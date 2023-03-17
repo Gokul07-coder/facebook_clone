@@ -77,10 +77,10 @@ let upload_story = async (req, res) => {
 };
 
 let get_story = (req, res) => {  
-  console.log(req.user);
+  // console.log(req.user);
   let { user_id } = req.user;
   try {
-    db.query("select * from story where id = ? ", [user_id], (err, result) => {
+    db.query("select * from story where story.time > DATE_SUB(CURDATE(), INTERVAL 1 DAY) and id = ? ", [user_id], (err, result) => {
       if (err) {
         console.log("Error at fetching");
         console.log(err);

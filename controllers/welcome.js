@@ -3,7 +3,7 @@ const db = require('../Util/database');
 
 let home = (req,res)=>{
     let {user_id} = req.user;
-    console.log("hello user"+ user_id);
+    console.log("hello user "+ user_id);
     db.query('select first_name from account where id = ?', [user_id], (err,result)=>{
         if(err){
             console.log("error at displaying",err);

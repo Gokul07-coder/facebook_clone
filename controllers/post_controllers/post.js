@@ -67,6 +67,7 @@ let getPost = (req, res) => {
 };
 
 let upload_post = async (req, res) => {
+  
   let { user_id } = req.user;
   console.log(user_id);
   var localFilePath = req.file.path;

@@ -26,7 +26,23 @@ let friendRequests = (req,res)=>{
 }
 
 let sentRequest = (req,res)=>{
-
+    try{
+        let {user_id} = req.user;
+        db.query('select account.id,first_name,profile from account where id in(select id from friend_req where request_id = ?)', [user_id], (err,result)=>{
+            if(err){
+                console.log("Error");
+                console.log(err);
+            }
+            else{
+                console.log("result displayed");
+                res.status(201).json({message : result});
+            }
+        })
+    }
+    catch(err){
+        console.log("Error at catch");
+        res.status(401).json({message : "Error at catch block"})
+    }
 }
 
 let acceptRequest = (req,res)=>{
@@ -58,7 +74,30 @@ let acceptRequest = (req,res)=>{
                 res.status(401).json({message : "Error at adding friend"})
             }
             else{
-                // console.log("Friend added");
+                db.query('INSERT INTO friend (id,friends_id) values (?,?)', [req_id,user_id], (err,result)=>{
+                    if(err) console.log("Error at mapping friends",err);
+                    else{
+                        console.log("mapped");
+                        db.query('insert into follow values (?,?)', [user_id,req_id], (err,resu)=>{
+                            if(err){
+                                console.log("Error at inserting into follow table");
+                                console.log(err);
+                            }
+                            else
+                            {
+                                db.query('insert into follow values (?,?)', [req_id,user_id], (err,resu)=>{
+                                    if(err){
+                                        console.log("Error at inserting into follow table");
+                                        console.log(err);
+                                    }
+                                    else{
+                                        console.log("follow added");
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
                 db.query('delete from friend_req where request_id = ?', [req_id], (err,result)=>{
                    if(err) console.log("error at removing request from table");
                    else console.log("Success");

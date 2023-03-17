@@ -151,4 +151,4 @@ let changePassword = (req,res)=>{
 
 }
 
-module.exports = {forgetPassword,postMethod,changePassword};
+module.exports = { forgetPassword, postMethod, changePassword };
