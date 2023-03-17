@@ -1,5 +1,6 @@
 let express = require("express");
 let Router = express.Router();
+
 const {
   signupRoute,
   signupPost,
@@ -24,20 +25,6 @@ Router.get("/", (req, res) => {
   console.log("OK Entry point");
 });
 
-// const routeConfig = [
-//   {
-//     type: "GET",
-//     routeName: "signup",
-//     handler: signupRoute,
-//   },
-// ];
-
-// routeConfig.map((e) => {
-//   if (e.type === "GET") {
-//     Router.get(`/${e.routeName}`, e.handler);
-//   }
-// });
-
 Router.get("/signup", signupRoute);
 Router.post("/signup", signupPost);
 Router.get("/signup/otp", get_otp);
@@ -48,10 +35,10 @@ Router.get("/login", loginRoute);
 Router.post("/login", loginPost);
 Router.get("/login/forgetPassword", forgetPassword);
 Router.post("/login/forgetPassword", postMethod);
-Router.post("/login/forgetPassword/changePassword", changePassword);
+Router.patch("/login/forgetPassword", changePassword);
 
 Router.get("/getuser", getuser);
 
-Router.get("/home", refToken, home);
+// Router.get("/home", refToken, home);
 
 module.exports = Router;
